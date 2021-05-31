@@ -29,6 +29,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public Role findByName(String roleName) {
+		return roleRepository.findByName(roleName)
+				.orElseThrow(() -> new NoSuchElementException("RoleService.notFound"));
+	}
+
+	@Override
 	public Role save(Role role) {
 		return roleRepository.save(role);
 	}

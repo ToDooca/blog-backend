@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xyz.todooc4.blogbackend.data.dto.RegisterRequest;
 import xyz.todooc4.blogbackend.entity.*;
 import xyz.todooc4.blogbackend.service.*;
 
@@ -33,6 +34,12 @@ public class UserController {
 	@ApiOperation(value = "", nickname = "saveUser")
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+	}
+
+	@PostMapping("/register")
+	@ApiOperation(value = "", nickname = "registerUser")
+	public ResponseEntity<User> save(@RequestBody RegisterRequest register) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(register));
 	}
 
 	@PutMapping

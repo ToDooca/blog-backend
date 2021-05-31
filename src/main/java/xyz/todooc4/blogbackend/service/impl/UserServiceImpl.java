@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import xyz.todooc4.blogbackend.data.dto.RegisterRequest;
 import xyz.todooc4.blogbackend.entity.*;
 import xyz.todooc4.blogbackend.repository.UserRepository;
+import xyz.todooc4.blogbackend.service.RoleService;
 import xyz.todooc4.blogbackend.service.UserService;
 
 @Data
@@ -19,6 +20,7 @@ import xyz.todooc4.blogbackend.service.UserService;
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final RoleService roleService;
 
 	@Override
 	public List<User> findAll(Specification<User> specification, Sort sort) {
@@ -93,6 +95,24 @@ public class UserServiceImpl implements UserService {
 		User user = findById(userId);
 		user.getRoles().removeAll(roles);
 		return userRepository.save(user).getRoles();
+	}
+
+	@Override
+	public User register(RegisterRequest register) {
+		User user = getUser(register);
+		user.getRoles().add(roleService.findByName("USER"));
+		return userRepository.save(user);
+	}
+
+	private User getUser(RegisterRequest register) {
+		User user = new User();
+		user.setUsername(register.getUsername());
+		user.setEmail(register.getEmail());
+		user.setFullName(register.getFullName());
+		user.setDisplayName(register.getDisplayName());
+		user.setAbout(register.getAbout());
+		user.setPassword(passwordEncoder.encode(register.getPassword()));
+		return user;
 	}
 
 

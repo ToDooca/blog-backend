@@ -1,6 +1,5 @@
 package xyz.todooc4.blogbackend.security.annotation;
 
-
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.lang.annotation.ElementType;

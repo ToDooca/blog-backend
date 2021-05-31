@@ -16,8 +16,8 @@ import xyz.todooc4.blogbackend.service.UserService;
 public class AuthController {
     private final UserService userService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<User> signup(@RequestBody RegisterRequest registerRequest) {
-        return ResponseEntity.ok(userService.signup(registerRequest));
-    }
+//    @PostMapping("/signup")
+//    public ResponseEntity<User> signup(@RequestBody RegisterRequest registerRequest) {
+//        return ResponseEntity.ok(userService.signup(registerRequest));
+//    }
 }

@@ -31,4 +31,5 @@ public interface UserService {
 
 	List<Role> deleteRolesById(Integer userId, List<Role> roles);
 
+	User register(RegisterRequest register);
 }
