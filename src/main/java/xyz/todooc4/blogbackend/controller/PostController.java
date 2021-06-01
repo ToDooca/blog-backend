@@ -29,6 +29,12 @@ public class PostController {
 		return ResponseEntity.ok(postService.findById(postId));
 	}
 
+	@GetMapping("/post/{postSlug}")
+	@ApiOperation(value = "", nickname = "getPostBySlug")
+	public ResponseEntity<Post> getPostBySlug(@PathVariable String postSlug) {
+		return ResponseEntity.ok(postService.findBySlug(postSlug));
+	}
+
 	@PostMapping
 	@ApiOperation(value = "", nickname = "savePost")
 	public ResponseEntity<Post> savePost(@RequestBody Post post) {

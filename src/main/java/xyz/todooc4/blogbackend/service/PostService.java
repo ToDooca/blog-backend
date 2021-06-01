@@ -1,6 +1,5 @@
 package xyz.todooc4.blogbackend.service;
 
-import java.util.Collection;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -15,6 +14,8 @@ public interface PostService {
 	Post update(Post post);
 
 	Post findById(Integer postId);
+
+	Post findBySlug(String postSlug);
 
 	void deleteById(Integer postId);
 
