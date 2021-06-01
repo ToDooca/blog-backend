@@ -1,5 +1,7 @@
 package xyz.todooc4.blogbackend.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import xyz.todooc4.blogbackend.data.dto.TokenResponse;
 import xyz.todooc4.blogbackend.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.http.HttpHeaders.*;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 import static xyz.todooc4.blogbackend.security.SecurityConstants.*;
 
 @RequiredArgsConstructor
@@ -38,8 +40,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
 		String token = jwtProvider.createToken(authResult.getName(), authResult.getAuthorities());
 		response.setHeader(AUTHORIZATION, TOKEN_PREFIX + token);
-		response.getWriter().write(token);
-		response.setStatus(NO_CONTENT.value());
+		response.setStatus(OK.value());
+		new ObjectMapper().writeValue(response.getWriter(), TokenResponse.of(token));
 	}
 
 	@Override
