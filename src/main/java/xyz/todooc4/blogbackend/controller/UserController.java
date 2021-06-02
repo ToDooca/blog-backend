@@ -1,7 +1,9 @@
 package xyz.todooc4.blogbackend.controller;
 
 import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
+
 import lombok.*;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -16,67 +18,71 @@ import xyz.todooc4.blogbackend.service.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-	private final UserService userService;
+    private final UserService userService;
 
-	@GetMapping
-	@ApiOperation(value = "", nickname = "getAllUsers")
-	public ResponseEntity<List<User>> getAllUsers(@RequestParam(name = "q", required = false) Specification<User> specification, @RequestParam(name = "sort", required = false) Sort sort) {
-		return ResponseEntity.ok(userService.findAll(specification, sort));
-	}
+    @GetMapping
+    @ApiOperation(value = "", nickname = "getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(name = "q", required = false) Specification<User> specification, @RequestParam(name = "sort", required = false) Sort sort) {
+        return ResponseEntity.ok(userService.findAll(specification, sort));
+    }
 
-	@GetMapping("/{userId}")
-	@ApiOperation(value = "", nickname = "getUserById")
-	public ResponseEntity<User> getUserById(@PathVariable Integer userId) {
-		return ResponseEntity.ok(userService.findById(userId));
-	}
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "", nickname = "getUserById")
+    public ResponseEntity<User> getUserById(@PathVariable String userId) {
+        try {
+            return ResponseEntity.ok(userService.findById(Integer.parseInt(userId)));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.ok(userService.findByUsername(userId));
+        }
+    }
 
-	@PostMapping
-	@ApiOperation(value = "", nickname = "saveUser")
-	public ResponseEntity<User> saveUser(@RequestBody User user) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
-	}
+    @PostMapping
+    @ApiOperation(value = "", nickname = "saveUser")
+    public ResponseEntity<User> saveUser(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+    }
 
-	@PostMapping("/register")
-	@ApiOperation(value = "", nickname = "registerUser")
-	public ResponseEntity<User> save(@RequestBody RegisterRequest register) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(register));
-	}
+    @PostMapping("/register")
+    @ApiOperation(value = "", nickname = "registerUser")
+    public ResponseEntity<User> save(@RequestBody RegisterRequest register) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(register));
+    }
 
-	@PutMapping
-	@ApiOperation(value = "", nickname = "updateUser")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		return ResponseEntity.ok(userService.update(user));
-	}
+    @PutMapping
+    @ApiOperation(value = "", nickname = "updateUser")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        return ResponseEntity.ok(userService.update(user));
+    }
 
-	@DeleteMapping("/{userId}")
-	@ApiOperation(value = "", nickname = "deleteUserById")
-	public void deleteUserById(@PathVariable Integer userId) {
-		userService.deleteById(userId);
-	}
+    @DeleteMapping("/{userId}")
+    @ApiOperation(value = "", nickname = "deleteUserById")
+    public void deleteUserById(@PathVariable Integer userId) {
+        userService.deleteById(userId);
+    }
 
-	@GetMapping("/{userId}/roles")
-	@ApiOperation(value = "", nickname = "getUserRoles")
-	public ResponseEntity<List<Role>> getUserRoles(@PathVariable Integer userId) {
-		return ResponseEntity.ok(userService.findAllRolesById(userId));
-	}
+    @GetMapping("/{userId}/roles")
+    @ApiOperation(value = "", nickname = "getUserRoles")
+    public ResponseEntity<List<Role>> getUserRoles(@PathVariable Integer userId) {
+        return ResponseEntity.ok(userService.findAllRolesById(userId));
+    }
 
-	@PostMapping("/{userId}/roles")
-	@ApiOperation(value = "", nickname = "setUserRoles")
-	public ResponseEntity<List<Role>> setUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
-		return ResponseEntity.ok(userService.setRolesById(userId, roles));
-	}
+    @PostMapping("/{userId}/roles")
+    @ApiOperation(value = "", nickname = "setUserRoles")
+    public ResponseEntity<List<Role>> setUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
+        return ResponseEntity.ok(userService.setRolesById(userId, roles));
+    }
 
-	@PutMapping("/{userId}/roles")
-	@ApiOperation(value = "", nickname = "addUserRoles")
-	public ResponseEntity<List<Role>> addUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
-		return ResponseEntity.ok(userService.addRolesById(userId, roles));
-	}
+    @PutMapping("/{userId}/roles")
+    @ApiOperation(value = "", nickname = "addUserRoles")
+    public ResponseEntity<List<Role>> addUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
+        return ResponseEntity.ok(userService.addRolesById(userId, roles));
+    }
 
-	@DeleteMapping("/{userId}/roles")
-	@ApiOperation(value = "", nickname = "deleteUserRoles")
-	public ResponseEntity<List<Role>> deleteUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
-		return ResponseEntity.ok(userService.deleteRolesById(userId, roles));
-	}
+    @DeleteMapping("/{userId}/roles")
+    @ApiOperation(value = "", nickname = "deleteUserRoles")
+    public ResponseEntity<List<Role>> deleteUserRoles(@PathVariable Integer userId, @RequestBody List<Role> roles) {
+        return ResponseEntity.ok(userService.deleteRolesById(userId, roles));
+    }
 
 }
 

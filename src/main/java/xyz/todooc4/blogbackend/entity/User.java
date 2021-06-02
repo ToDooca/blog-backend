@@ -45,26 +45,31 @@ public class User extends Auditable implements UserDetails {
 	private List<Role> roles = new ArrayList<>();
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return isEnabled();
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return isEnabled();
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return isEnabled();
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isEnabled() {
 		return getRecordStatus() == 1;
 	}

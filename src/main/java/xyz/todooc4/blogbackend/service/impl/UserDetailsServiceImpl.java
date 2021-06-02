@@ -1,8 +1,6 @@
 package xyz.todooc4.blogbackend.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,11 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 new UsernameNotFoundException("No user under name " + username + " found"));
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(), true, true, true, true,
-                getAuthorities("ROLE_USER"));
+                getAuthorities());
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(String role_user) {
-        return Collections.singletonList(new SimpleGrantedAuthority(role_user));
+    private Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
 }
