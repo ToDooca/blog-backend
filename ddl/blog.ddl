@@ -91,6 +91,26 @@ create table `comment`
         on update cascade on delete cascade
 ) comment 'User comment on a post';
 
+drop table if exists `comment`;
+create table `comment`
+(
+    `comment_id`         int auto_increment primary key,
+    `user_fk`            int  not null,
+    `post_fk`            int  null,
+    `body`               text not null,
+
+    -- auditable
+    `created_date`       timestamp   default current_timestamp(),
+    `last_modified_by`   varchar(32) default 'system',
+    `last_modified_date` timestamp   default current_timestamp(),
+    `record_status`      int         default 1,
+
+    constraint `fk_post_comment` foreign key (`post_fk`) references `post` (`post_id`)
+        on update cascade on delete cascade,
+    constraint `fk_user_comment` foreign key (`user_fk`) references `user` (`user_id`)
+        on update cascade on delete cascade
+) comment 'User comment on a post';
+
 drop table if exists `user_role`;
 create table `user_role`
 (

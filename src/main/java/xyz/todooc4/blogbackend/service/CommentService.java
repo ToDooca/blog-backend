@@ -18,4 +18,5 @@ public interface CommentService {
 
 	void deleteById(Integer commentId);
 
+    List<Comment> findAllByPostId(Integer postId);
 }

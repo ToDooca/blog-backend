@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import xyz.todooc4.blogbackend.entity.*;
 import xyz.todooc4.blogbackend.service.*;
@@ -51,6 +52,16 @@ public class PostController {
 	@ApiOperation(value = "", nickname = "deletePostById")
 	public void deletePostById(@PathVariable Integer postId) {
 		postService.deleteById(postId);
+	}
+
+	@GetMapping("/{postId}/comments")
+	public ResponseEntity<List<Comment>> getAllCommentsForPost(@PathVariable Integer postId) {
+		return ResponseEntity.ok(postService.findAllCommentsForPost(postId));
+	}
+
+	@PostMapping("/{postId}/comments")
+	public ResponseEntity<Comment> saveCommentForPost(@AuthenticationPrincipal User user, @RequestBody Comment comment, @PathVariable Integer postId) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(postService.saveCommentForPost(comment, postId, user));
 	}
 
 }
