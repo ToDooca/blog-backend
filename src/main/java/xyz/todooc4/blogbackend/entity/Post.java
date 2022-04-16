@@ -36,5 +36,4 @@ public class Post extends Auditable {
 	private Integer views;
 	@Column(name = "slug")
 	private String slug;
-	
 }

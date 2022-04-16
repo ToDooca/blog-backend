@@ -9,3 +9,9 @@ VALUES ('dusan', '$2y$10$OzcebClrP0f56UDpFtfiZuEPBzN1HgPkBKpmtkeSWgAyp82v3s3CO',
 
 INSERT INTO `user_role`(`role_fk`, `user_fk`) VALUES ('1','1');
 INSERT INTO `user_role`(`role_fk`, `user_fk`) VALUES ('2','2');
+
+INSERT INTO `category`(`name`) VALUES ('lifestyle');
+INSERT INTO `category`(`name`) VALUES ('productivity');
+INSERT INTO `category`(`name`) VALUES ('photography');
+INSERT INTO `category`(`name`) VALUES ('health');
+INSERT INTO `category`(`name`) VALUES ('sports');

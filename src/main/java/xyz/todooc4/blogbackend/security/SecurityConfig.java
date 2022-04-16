@@ -1,6 +1,5 @@
 package xyz.todooc4.blogbackend.security;
 
-import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;

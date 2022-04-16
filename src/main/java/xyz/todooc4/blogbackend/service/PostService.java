@@ -18,8 +18,4 @@ public interface PostService {
 	Post findBySlug(String postSlug);
 
 	void deleteById(Integer postId);
-
-    Comment saveCommentForPost(Comment comment, Integer postId, User user);
-
-	List<Comment> findAllCommentsForPost(Integer postId);
 }

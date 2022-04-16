@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import xyz.todooc4.blogbackend.entity.*;
 import xyz.todooc4.blogbackend.repository.PostRepository;
-import xyz.todooc4.blogbackend.service.CommentService;
 import xyz.todooc4.blogbackend.service.PostService;
 
 @Data
@@ -17,7 +16,6 @@ import xyz.todooc4.blogbackend.service.PostService;
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class PostServiceImpl implements PostService {
 	private final PostRepository postRepository;
-	private final CommentService commentService;
 
 	@Override
 	public List<Post> findAll(Specification<Post> specification, Sort sort) {
@@ -49,19 +47,6 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public void deleteById(Integer postId) {
 		postRepository.deleteById(postId);
-	}
-
-	@Override
-	public Comment saveCommentForPost(Comment comment, Integer postId, User user) {
-		Post post = findById(postId);
-		comment.setPost(post);
-		comment.setUser(user);
-		return commentService.save(comment);
-	}
-
-	@Override
-	public List<Comment> findAllCommentsForPost(Integer postId) {
-		return commentService.findAllByPostId(postId);
 	}
 
 
